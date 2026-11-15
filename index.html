@@ -59,18 +59,18 @@
     .camera-pointer-pill {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      font-size: 10.5px;
-      letter-spacing: 1.2px;
+      gap: 5px;
+      font-size: 7.5px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
-      color: #cbd5e1;
-      background: rgba(13, 18, 28, 0.9);
-      padding: 4px 14px;
-      border-radius: 0 0 10px 10px;
-      font-weight: 700;
+      color: rgba(203, 213, 225, 0.55);
+      background: rgba(13, 18, 28, 0.75);
+      padding: 2px 10px;
+      border-radius: 0 0 8px 8px;
+      font-weight: 600;
       border: 1px solid var(--border-color);
       border-top: none;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(8px);
     }
 
@@ -868,11 +868,9 @@
       const delta = Math.min(timestamp - lastTimestamp, 100); // cap a 100ms (ej: pestaña en segundo plano)
       lastTimestamp = timestamp;
 
-      // Compensación inteligente por tamaño de fuente:
-      // Al achicar la letra, las líneas son más bajas y entran más palabras.
-      // Multiplicamos por (fontSize / 38) para que el ritmo de palabras por minuto
-      // sea el mismo sin importar si la letra es chica o grande.
-      const fontFactor = fontSize / 38;
+      // fontFactor con raíz cuadrada: compensa sin frenar demasiado en letras muy chicas.
+      // A 38px (base) = 1.0x. A 20px ≈ 0.73x. A 14px ≈ 0.61x. A 70px ≈ 1.36x.
+      const fontFactor = Math.sqrt(fontSize / 38);
       preciseScroll += getPixelsPerSecond(scrollSpeed) * fontFactor * (delta / 1000);
       viewport.scrollTop = preciseScroll;
 
@@ -1014,7 +1012,7 @@
     // Control de tamaño de letra con anclaje inteligente (el texto NO se desplaza)
     function setFontSize(newSize) {
       const oldSize = fontSize;
-      fontSize = Math.max(20, Math.min(70, newSize));
+      fontSize = Math.max(14, Math.min(70, newSize));
       if (fontSize === oldSize) return;
 
       // 1. Si está al inicio del texto, asegurar que permanezca totalmente quieto en 0
