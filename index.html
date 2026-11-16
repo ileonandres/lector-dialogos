@@ -97,7 +97,7 @@
     /* Línea guía de lectura fija cerca de la cámara (ubicada más arriba para contacto visual directo) */
     .reading-marker {
       position: fixed;
-      top: 48px;
+      top: 32px;
       left: 0;
       right: 0;
       height: 48px;
@@ -568,35 +568,8 @@
   <div id="prompter-viewport">
     <div class="prompter-content-wrapper">
       <div id="script-display">
-        <p>Sí, en buena medida. Y esa creencia se sostuvo durante décadas.</p>
-        <p>Mi nombre es Andrés y, siguiendo la pregunta de Sameily: ¿puede ser neutral la ciencia si, como sostiene Diana Maffía, se pensó a la medida de la vida de los varones?</p>
-        <p>Durante mucho tiempo nos dijeron que sí: que la ciencia es objetiva y meritocrática.</p>
-        <p>Arocena recuerda que en el siglo XIX parecía llevar a un conocimiento absoluto y permanente, la “era de las certezas”, y que esa imagen se quebró en el siglo XX (Arocena, 1993, pp. 39-41).</p>
-        <p>O sea, la neutralidad no es un hecho de la naturaleza, sino una imagen histórica.</p>
-        <p>Y eso cuestiona Maffía: detrás de esa neutralidad hay una estructura androcéntrica, que toma la experiencia masculina como parámetro universal de lo humano (Maffía, 2008, pp. 2-3).</p>
-        <p>Y no era solo cuestión de prejuicios: la ley también marcaba la cancha.</p>
-        <p>Hasta bien entrado el siglo XX, el Código Civil argentino limitaba la capacidad civil de las mujeres casadas, y el voto femenino llegó recién en 1947, con la Ley 13.010.</p>
-        <p>Dentro de la ciencia, ¿qué costo pagaron las pioneras?</p>
-        <p>Cuando la RAGCyT (Red Argentina de Género, Ciencia y Tecnología, una asociación civil fundada en los años 90) estudió sus biografías, encontró que casi todas habían permanecido solteras, o se habían casado ya mayores con colegas, y no tenían hijos.</p>
-        <p>En cambio, el 75 % de sus colegas varones eran casados y podían coordinar su vida familiar y profesional.</p>
-        <p>Maffía lo dice con ironía: para tener las mismas oportunidades, las mujeres habrían necesitado “esposas” y no “esposos”, alguien que cuidara de todo en casa sin cobrar (Maffía, 2008, p. 3).</p>
-        <p>A eso se sumaba un doble mandato: ser madre de tiempo completo y científica de tiempo completo.</p>
-        <p>La astrofísica Gloria Dubner lo resumió así: “Nunca logré que en mi casa no se notara que trabajo, y en el trabajo no se notara que tengo hijos” (Dubner, 1995, como se citó en Maffía, 2008, p. 3).</p>
-        <p>A nivel mundial, el caso más célebre es el de Marie Curie: compartió el Nobel de Física de 1903 con su esposo Pierre y con Henri Becquerel, y en 1911 ganó sola el de Química, siendo la primera persona en recibir dos Nobel (Nobel Prize Outreach, s. f.).</p>
-        <p>Su historia muestra hasta dónde se podía llegar; los datos de Maffía muestran cuántas llegaban.</p>
-        <p>También en los laboratorios de I+D, que Arocena presenta como motor de la innovación del siglo XX (1993, pp. 42-45), hubo mujeres, aunque pioneras.</p>
-        <p>Katharine Blodgett fue la primera científica del laboratorio de investigación de General Electric y la primera mujer con doctorado en física de Cambridge (Science History Institute, s. f.).</p>
-        <p>Allí inventó el vidrio no reflectante, que se usó en periscopios y cámaras aéreas durante la Segunda Guerra (Lemelson-MIT, s. f.).</p>
-        <p>Y en Argentina, la UBA instaló en 1960 su primera computadora científica, Clementina, y la matemática Cecilia Berdichevsky fue la primera programadora del país (Universidad de Buenos Aires, s. f.).</p>
-        <p>Para Arocena, tener capacidad científica propia es clave para no depender de comprar tecnología ya hecha (1993, pp. 102-103).</p>
-        <p>¿Y hoy? Hannah Schmitz, ingeniera mecánica formada en Cambridge, es estratega principal del equipo Red Bull de Fórmula 1.</p>
-        <p>En una entrevista con el Departamento de Ingeniería de esa universidad, cuenta que, siendo mujer, ganarse la confianza de quienes debían seguir sus indicaciones le costó más al principio, pero que hoy tiene ese respeto y espera que otras jóvenes vean que ellas también pueden.</p>
-        <p>También cuenta que en 2019 acababa de volver a trabajar tras su primer hijo y quería demostrar que seguía haciendo bien su trabajo (Departamento de Ingeniería, Universidad de Cambridge, s. f.).</p>
-        <p>Su testimonio dialoga con el de Dubner: combinar maternidad y una carrera de alto nivel sigue exigiendo demostrar, una y otra vez, que se puede.</p>
-        <p>Un solo caso no cambia el sistema, pero muestra por qué importan los referentes.</p>
-        <p>Maffía señala justamente la falta de modelos con los que identificarse como una barrera para las mujeres en la ciencia (Maffía, 2008, p. 4).</p>
-        <p>Y aun así, que existan referentes no alcanza: incluso con más mujeres en las aulas, siguen siendo pocas en los lugares donde se decide.</p>
-        <p style="color: var(--accent-color); font-weight: 800;">¿Por qué? Flor nos da las palabras para entenderlo.</p>
+        <p>De la mano de estas tecnologías, el mundo se transformó en la "aldea global" conceptualizada por Marshall McLuhan, acortando las distancias físicas e intensificando la conexión social en tiempo real.</p>
+        <p>Este avance resultó ser una espada de doble filo para las científicas: por un lado, internacionalizó las barreras de género y perpetuó brechas digitales, pero por el otro, facilitó un medio de visibilización sin precedentes.</p>
       </div>
     </div>
   </div>
@@ -655,7 +628,8 @@
       <div class="control-group" title="Controla cuántas palabras entran por renglón">
         <label>Renglón:</label>
         <select class="select-preset" id="widthPreset">
-          <option value="360">Ultra angosto (3-4 palabras)</option>
+          <option value="280">Muy angosto (2-3 palabras)</option>
+          <option value="320">Ultra angosto (3-4 palabras)</option>
           <option value="410" selected>Angosto / enfoque (4-5 palabras)</option>
           <option value="520">Normal (6-7 palabras)</option>
           <option value="640">Amplio (8-9 palabras)</option>
@@ -672,7 +646,7 @@
 
       <!-- Opciones extra: Cuenta atrás / Espejo / Guía visual / Pantalla Completa -->
       <div class="control-group">
-        <label style="cursor:pointer;" title="Cuenta regresiva de 3 segundos antes de iniciar"><input type="checkbox" id="chkCountdown" checked> Cuenta 3s</label>
+        <label style="cursor:pointer;" title="Cuenta regresiva de 3 segundos antes de iniciar"><input type="checkbox" id="chkCountdown"> Cuenta 3s</label>
         <span style="opacity: 0.3;">|</span>
         <label style="cursor:pointer;"><input type="checkbox" id="chkGuide" checked> Guía</label>
         <span style="opacity: 0.3;">|</span>
@@ -823,7 +797,7 @@
 
       // Sincronizar selector de presets de ancho
       if (widthPreset) {
-        if ([360, 410, 520, 640].includes(readingWidth)) {
+        if ([280, 320, 360, 410, 520, 640].includes(readingWidth)) {
           widthPreset.value = String(readingWidth);
           if (optCustomWidth) optCustomWidth.hidden = true;
         } else if (optCustomWidth) {
@@ -1066,7 +1040,7 @@
 
     // Control de ancho de texto / renglón
     function setWidth(newWidth) {
-      readingWidth = Math.max(260, Math.min(800, newWidth));
+      readingWidth = Math.max(200, Math.min(800, newWidth));
       updateStyles();
     }
     if (widthPreset) {
