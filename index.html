@@ -94,7 +94,39 @@
       to { opacity: 1; transform: scale(1.2); }
     }
 
-    /* Línea guía de lectura fija cerca de la cámara (ubicada más arriba para contacto visual directo) */
+    /* ── Cámara en vivo ─────────────────────────────────────────── */
+    #camPreview {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      object-fit: cover;
+      /* modo fondo completo */
+    }
+    #camPreview.cam-full {
+      display: block;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+    }
+    #camPreview.cam-corner {
+      display: block;
+      bottom: 100px; right: 18px;
+      width: 220px; height: 140px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+    }
+    #camVeil {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: rgba(7, 9, 14, 0.62);
+      transition: opacity 0.3s;
+    }
+    #camVeil.veil-on { display: block; }
+
+    /* ── Línea guía de lectura fija cerca de la cámara (ubicada más arriba para contacto visual directo) */
     .reading-marker {
       position: fixed;
       top: 32px;
@@ -140,6 +172,7 @@
       overflow-x: hidden;
       scrollbar-width: none;
       position: relative;
+      z-index: 3;
       cursor: grab;
       scroll-behavior: auto;
     }
@@ -565,6 +598,10 @@
   </div>
 
   <!-- Vista principal del texto -->
+  <!-- Cámara en vivo (fondo completo o esquina) -->
+  <video id="camPreview" autoplay muted playsinline></video>
+  <div id="camVeil"></div>
+
   <div id="prompter-viewport">
     <div class="prompter-content-wrapper">
       <div id="script-display">
@@ -651,6 +688,18 @@
         <label style="cursor:pointer;"><input type="checkbox" id="chkGuide" checked> Guía</label>
         <span style="opacity: 0.3;">|</span>
         <label style="cursor:pointer;"><input type="checkbox" id="chkMirror"> Espejo</label>
+      </div>
+
+      <!-- Controles de cámara en vivo -->
+      <div class="control-group" id="camControlGroup">
+        <button class="btn-icon-sm" id="btnCamToggle" title="Activar/desactivar cámara en vivo" style="display:flex;align-items:center;gap:5px;padding:4px 10px;font-size:11px;white-space:nowrap;">
+          <svg class="icon-sm" viewBox="0 0 24 24"><path d="M23 7 16 12l7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          <span id="camBtnLabel">Cámara</span>
+        </button>
+        <span id="camModeControls" style="display:none;align-items:center;gap:6px;">
+          <button class="btn-icon-sm" id="btnCamMode" title="Cambiar entre fondo completo y esquina" style="padding:4px 8px;font-size:11px;" >Fondo</button>
+          <label style="cursor:pointer;font-size:11px;white-space:nowrap;"><input type="checkbox" id="chkVeil" checked> Velo</label>
+        </span>
       </div>
 
       <button class="btn" id="btnFullscreen" title="Elimina las pestañas del navegador para pegar el texto a la cámara física (F11)">
@@ -1192,6 +1241,67 @@
 
     btnTogglePlay.addEventListener('click', togglePlay);
     btnRewind.addEventListener('click', rewind);
+
+    // ── Cámara en vivo ──────────────────────────────────────────────
+    const camPreview      = document.getElementById('camPreview');
+    const camVeil         = document.getElementById('camVeil');
+    const btnCamToggle    = document.getElementById('btnCamToggle');
+    const btnCamMode      = document.getElementById('btnCamMode');
+    const camModeControls = document.getElementById('camModeControls');
+    const camBtnLabel     = document.getElementById('camBtnLabel');
+    const chkVeil         = document.getElementById('chkVeil');
+
+    let camStream = null;
+    let camMode   = 'off';   // 'off' | 'full' | 'corner'
+
+    function applyCamMode() {
+      camPreview.classList.remove('cam-full', 'cam-corner');
+      if (camMode === 'full')   { camPreview.classList.add('cam-full');   btnCamMode.textContent = 'Fondo'; }
+      if (camMode === 'corner') { camPreview.classList.add('cam-corner'); btnCamMode.textContent = 'Esquina'; }
+      applyVeil();
+    }
+
+    function applyVeil() {
+      const veilWanted = camMode !== 'off' && camMode !== 'corner' && chkVeil && chkVeil.checked;
+      camVeil.classList.toggle('veil-on', veilWanted);
+    }
+
+    async function startCamera() {
+      try {
+        camStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        camPreview.srcObject = camStream;
+        camMode = 'full';
+        camBtnLabel.textContent = 'Cám. activa';
+        btnCamToggle.style.color = '#38bdf8';
+        camModeControls.style.display = 'flex';
+        applyCamMode();
+      } catch (err) {
+        alert('No se pudo acceder a la cámara. Revisá los permisos del navegador.');
+      }
+    }
+
+    function stopCamera() {
+      if (camStream) { camStream.getTracks().forEach(t => t.stop()); camStream = null; }
+      camPreview.srcObject = null;
+      camPreview.classList.remove('cam-full', 'cam-corner');
+      camVeil.classList.remove('veil-on');
+      camMode = 'off';
+      camBtnLabel.textContent = 'Cámara';
+      btnCamToggle.style.color = '';
+      camModeControls.style.display = 'none';
+    }
+
+    btnCamToggle.addEventListener('click', () => {
+      if (camMode === 'off') { startCamera(); } else { stopCamera(); }
+    });
+
+    btnCamMode.addEventListener('click', () => {
+      if (camMode === 'full')   { camMode = 'corner'; }
+      else if (camMode === 'corner') { camMode = 'full'; }
+      applyCamMode();
+    });
+
+    if (chkVeil) chkVeil.addEventListener('change', applyVeil);
 
     // Inicialización
     updateStyles();
